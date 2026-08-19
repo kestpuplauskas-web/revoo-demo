@@ -5,6 +5,7 @@
 import { DEFAULT_PROPERTY_SETTINGS, SETTINGS_COLUMN_MAP, type PropertySettings } from "./property-settings";
 import { ROOM_KINDS, BED_TYPES } from "./properties";
 import { toVocative } from "./lt-vocative";
+import { resolveFromAddress } from "./email-from";
 
 export type NotificationKind =
   | "booking_confirmation"
