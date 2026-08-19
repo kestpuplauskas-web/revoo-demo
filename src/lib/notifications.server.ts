@@ -5,6 +5,7 @@
 import { DEFAULT_PROPERTY_SETTINGS, SETTINGS_COLUMN_MAP, type PropertySettings } from "./property-settings";
 import { ROOM_KINDS, BED_TYPES } from "./properties";
 import { toVocative } from "./lt-vocative";
+import { resolveFromAddress } from "./email-from";
 
 export type NotificationKind =
   | "booking_confirmation"
@@ -62,7 +63,7 @@ export async function sendEmail(opts: { to: string; subject: string; html: strin
   if (!apiKey) throw new Error("RESEND_API_KEY nesukonfigūruotas.");
   const lovableKey = process.env["LOVABLE_API_KEY"];
   if (!lovableKey) throw new Error("LOVABLE_API_KEY nesukonfigūruotas.");
-  const from = process.env["RESEND_FROM_EMAIL"] ?? "onboarding@resend.dev";
+  const from = resolveFromAddress();
 
   const res = await fetch("https://connector-gateway.lovable.dev/resend/emails", {
     method: "POST",

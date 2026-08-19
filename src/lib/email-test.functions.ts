@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import { resolveFromAddress } from "@/lib/email-from";
 
 async function assertAdmin(ctx: { supabase: any; userId: string }) {
   const { data, error } = await ctx.supabase.rpc("has_role", {
@@ -15,7 +16,7 @@ export const getEmailDiagnostics = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
     await assertAdmin({ supabase: context.supabase, userId: context.userId });
-    const from = process.env["RESEND_FROM_EMAIL"] ?? "onboarding@resend.dev";
+    const from = resolveFromAddress();
     return {
       hasResendKey: Boolean(process.env["RESEND_API_KEY"]),
       hasLovableKey: Boolean(process.env["LOVABLE_API_KEY"]),
@@ -35,7 +36,7 @@ export const sendResendTestEmail = createServerFn({ method: "POST" })
 
     const apiKey = process.env["RESEND_API_KEY"];
     const lovableKey = process.env["LOVABLE_API_KEY"];
-    const from = process.env["RESEND_FROM_EMAIL"] ?? "onboarding@resend.dev";
+    const from = resolveFromAddress();
 
     if (!apiKey || !lovableKey) {
       return {
