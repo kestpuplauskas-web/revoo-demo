@@ -3,6 +3,7 @@ import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { contentTemplateSchema, renderPreview } from "./content-templates";
 import { assertAdmin, rowToRecord } from "./content-templates.server";
+import { resolveFromAddress } from "./email-from";
 
 export const listContentTemplates = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
