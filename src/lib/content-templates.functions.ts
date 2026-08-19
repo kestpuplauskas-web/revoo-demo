@@ -3,6 +3,7 @@ import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { contentTemplateSchema, renderPreview } from "./content-templates";
 import { assertAdmin, rowToRecord } from "./content-templates.server";
+import { resolveFromAddress } from "./email-from";
 
 export const listContentTemplates = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
@@ -70,7 +71,7 @@ export const sendTestContentEmail = createServerFn({ method: "POST" })
         "El. laiškų siuntėjas dar nesukonfigūruotas — prijunkite el. pašto integraciją.",
       );
     }
-    const from = process.env["RESEND_FROM_EMAIL"] ?? "onboarding@resend.dev";
+    const from = resolveFromAddress();
 
     const res = await fetch("https://connector-gateway.lovable.dev/resend/emails", {
       method: "POST",
