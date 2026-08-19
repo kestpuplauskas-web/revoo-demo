@@ -26,9 +26,33 @@ function ResetPasswordPage() {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
       if (event === "PASSWORD_RECOVERY" || event === "SIGNED_IN") setReady(true);
     });
-    supabase.auth.getSession().then(({ data }) => {
-      if (data.session) setReady(true);
-    });
+
+    const bootstrap = async () => {
+      const { data } = await supabase.auth.getSession();
+      if (data.session) {
+        setReady(true);
+        return;
+      }
+      // Atsarginiai variantai: PKCE kodas arba token_hash nuorodoje.
+      const url = new URL(window.location.href);
+      const code = url.searchParams.get("code");
+      const tokenHash = url.searchParams.get("token_hash") ?? url.searchParams.get("token");
+      const type = url.searchParams.get("type");
+      if (code) {
+        const { error } = await supabase.auth.exchangeCodeForSession(code);
+        if (!error) setReady(true);
+        return;
+      }
+      if (tokenHash && (type === "invite" || type === "recovery" || type === "signup")) {
+        const { error } = await supabase.auth.verifyOtp({
+          type: type as "invite" | "recovery" | "signup",
+          token_hash: tokenHash,
+        });
+        if (!error) setReady(true);
+      }
+    };
+    void bootstrap();
+
     return () => subscription.unsubscribe();
   }, []);
 
