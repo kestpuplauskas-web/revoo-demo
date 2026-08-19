@@ -1,4 +1,4 @@
-import { createStart, createMiddleware } from "@tanstack/react-start";
+import { createStart, createCsrfMiddleware, createMiddleware } from "@tanstack/react-start";
 
 import { renderErrorPage } from "./lib/error-page";
 import { attachSupabaseAuth } from "@/integrations/supabase/auth-attacher";
@@ -18,7 +18,13 @@ const errorMiddleware = createMiddleware().server(async ({ next }) => {
   }
 });
 
+// Start įdiegia CSRF apsaugą automatiškai, kai src/start.ts nėra; kadangi failas
+// egzistuoja, ją registruojame patys, kad serverio funkcijos būtų apsaugotos.
+const csrfMiddleware = createCsrfMiddleware({
+  filter: (ctx) => ctx.handlerType === "serverFn",
+});
+
 export const startInstance = createStart(() => ({
-  requestMiddleware: [errorMiddleware],
+  requestMiddleware: [errorMiddleware, csrfMiddleware],
   functionMiddleware: [attachSupabaseAuth],
 }));
