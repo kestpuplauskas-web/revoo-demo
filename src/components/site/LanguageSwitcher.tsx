@@ -8,6 +8,7 @@ import {
   LOCALES,
   LOCALE_COOKIE,
   isLocale,
+  localeFromPath,
   localizePath,
   localizeRouteId,
   type Locale,
@@ -25,17 +26,24 @@ function readLocaleCookie(): Locale | null {
 }
 
 /**
- * Returning visitors who explicitly picked English land on /en.
- * Runs on the client only, so crawlers and first-time visitors always get LT.
+ * English is the default language for visitors: any Lithuanian (root) path is
+ * redirected to its /en counterpart unless the visitor explicitly picked LT.
+ * Runs on the client only, so the LT URLs stay canonical for crawlers.
  */
+const NON_SITE_PREFIXES = ["/admin", "/staff", "/auth", "/reset-password", "/api"];
+
 export function useRememberedLocaleRedirect() {
   const pathname = useRouterState({ select: (state) => state.location.pathname });
   useEffect(() => {
-    if (pathname !== "/") return;
-    if (readLocaleCookie() !== "en") return;
-    window.location.replace("/en");
+    if (NON_SITE_PREFIXES.some((p) => pathname === p || pathname.startsWith(`${p}/`))) return;
+    if (localeFromPath(pathname) === "en") return;
+    if (readLocaleCookie() === "lt") return;
+    const target = localizePath(pathname, "en");
+    if (target === pathname) return;
+    window.location.replace(`${target}${window.location.search}${window.location.hash}`);
   }, [pathname]);
 }
+
 
 export function LanguageSwitcher({ className, tone = "dark" }: { className?: string; tone?: "dark" | "light" }) {
   const current = useLocale();
