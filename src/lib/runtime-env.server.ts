@@ -60,7 +60,7 @@ export function resolveRentivoConfig(host: string | null | undefined): RentivoCo
   const explicitUrl = readEnvOptional(prod ? "RENTIVO_API_URL_PROD" : "RENTIVO_API_URL_DEV");
   const hostname = (host ?? "localhost:8080").toLowerCase();
   const scheme = hostname.startsWith("localhost") || hostname.startsWith("127.") ? "http" : "https";
-  const baseUrl = (explicitUrl ?? `${scheme}://${hostname}`).replace(/\/+$/, "");
+  const baseUrl = (explicitUrl ?? `${scheme}://${hostname}/api/public/v1`).replace(/\/+$/, "");
   const apiKey =
     readEnvOptional(prod ? "RENTIVO_API_KEY_PROD" : "RENTIVO_API_KEY_DEV") ??
     readEnv("RENTIVO_API_KEY");
