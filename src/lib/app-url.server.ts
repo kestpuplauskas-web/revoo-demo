@@ -1,16 +1,16 @@
-/** Kanoninis administravimo sistemos adresas — naudojamas laiškų nuorodose. */
-export const APP_BASE_URL = "https://admin.dharma.revoo.lt";
+/** Atsarginis kanoninis adresas — naudojamas, kai kliento origin nežinomas. */
+export const APP_BASE_URL = "https://demo.revoo.site";
 
 /**
- * Grąžina nuorodą į kanoninį prodo adresą.
- * Kliento perduotas origin naudojamas tik lokaliam dev (localhost).
+ * Grąžina absoliučią nuorodą.
+ * Pirmenybė kliento perduotam origin (kad laiško nuoroda vestų į tą pačią aplinką).
  */
 export function appLink(path: string, requestedOrigin?: string): string {
   let base = APP_BASE_URL;
   if (requestedOrigin) {
     try {
       const u = new URL(requestedOrigin);
-      if (u.hostname === "localhost" || u.hostname === "127.0.0.1") base = u.origin;
+      if (u.protocol === "http:" || u.protocol === "https:") base = u.origin;
     } catch {
       /* ignore */
     }
