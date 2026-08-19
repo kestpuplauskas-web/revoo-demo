@@ -8,7 +8,8 @@ export const CURRENCIES = [
   { value: "EUR", labelKey: "enums.currency.EUR" },
   { value: "USD", labelKey: "enums.currency.USD" },
   { value: "GBP", labelKey: "enums.currency.GBP" },
-  { value: "PLN", labelKey: "enums.currency.PLN" },
+  { value: "ISK", labelKey: "enums.currency.ISK" },
+  { value: "NOK", labelKey: "enums.currency.NOK" },
 ] as const;
 
 export const LANGUAGES = [

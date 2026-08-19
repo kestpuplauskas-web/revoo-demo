@@ -484,7 +484,8 @@
     "currency": {
       "EUR": "EUR — Euro",
       "GBP": "GBP — Pound sterling",
-      "PLN": "PLN — Polish zloty",
+      "ISK": "ISK — Icelandic króna",
+      "NOK": "NOK — Norwegian krone",
       "USD": "USD — US dollar"
     },
     "depositType": {

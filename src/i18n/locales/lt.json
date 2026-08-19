@@ -484,7 +484,8 @@
     "currency": {
       "EUR": "EUR — Euras",
       "GBP": "GBP — Svaras sterlingų",
-      "PLN": "PLN — Lenkijos zlotas",
+      "ISK": "ISK — Islandijos krona",
+      "NOK": "NOK — Norvegijos krona",
       "USD": "USD — JAV doleris"
     },
     "depositType": {
