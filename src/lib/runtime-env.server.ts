@@ -15,6 +15,14 @@ export function setWorkerEnv(env: unknown) {
   }
 }
 
+export function readEnvOptional(name: string): string | undefined {
+  const fromWorker = workerEnv?.[name];
+  if (typeof fromWorker === "string" && fromWorker.length > 0) return fromWorker;
+  const fromProcess = typeof process !== "undefined" ? process.env?.[name] : undefined;
+  if (typeof fromProcess === "string" && fromProcess.length > 0) return fromProcess;
+  return undefined;
+}
+
 export function readEnv(name: string): string {
   const fromWorker = workerEnv?.[name];
   if (typeof fromWorker === "string" && fromWorker.length > 0) return fromWorker;
@@ -42,9 +50,19 @@ export function isProductionRequest(host: string | null | undefined): boolean {
 
 export type RentivoConfig = { baseUrl: string; apiKey: string };
 
+/**
+ * Core API dabar gyvena tame pačiame projekte, todėl numatytasis bazinis adresas —
+ * to paties domeno origin. Aplinkos kintamieji (RENTIVO_API_URL_*) leidžia
+ * nurodyti išorinį Core, jei kada reikėtų.
+ */
 export function resolveRentivoConfig(host: string | null | undefined): RentivoConfig {
   const prod = isProductionRequest(host);
-  const baseUrl = readEnv(prod ? "RENTIVO_API_URL_PROD" : "RENTIVO_API_URL_DEV").replace(/\/+$/, "");
-  const apiKey = readEnv(prod ? "RENTIVO_API_KEY_PROD" : "RENTIVO_API_KEY_DEV");
+  const explicitUrl = readEnvOptional(prod ? "RENTIVO_API_URL_PROD" : "RENTIVO_API_URL_DEV");
+  const hostname = (host ?? "localhost:8080").toLowerCase();
+  const scheme = hostname.startsWith("localhost") || hostname.startsWith("127.") ? "http" : "https";
+  const baseUrl = (explicitUrl ?? `${scheme}://${hostname}`).replace(/\/+$/, "");
+  const apiKey =
+    readEnvOptional(prod ? "RENTIVO_API_KEY_PROD" : "RENTIVO_API_KEY_DEV") ??
+    readEnv("RENTIVO_API_KEY");
   return { baseUrl, apiKey };
 }
