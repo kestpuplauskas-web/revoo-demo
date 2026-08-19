@@ -30,9 +30,12 @@ function readLocaleCookie(): Locale | null {
  * redirected to its /en counterpart unless the visitor explicitly picked LT.
  * Runs on the client only, so the LT URLs stay canonical for crawlers.
  */
+const NON_SITE_PREFIXES = ["/admin", "/staff", "/auth", "/reset-password", "/api"];
+
 export function useRememberedLocaleRedirect() {
   const pathname = useRouterState({ select: (state) => state.location.pathname });
   useEffect(() => {
+    if (NON_SITE_PREFIXES.some((p) => pathname === p || pathname.startsWith(`${p}/`))) return;
     if (localeFromPath(pathname) === "en") return;
     if (readLocaleCookie() === "lt") return;
     const target = localizePath(pathname, "en");
