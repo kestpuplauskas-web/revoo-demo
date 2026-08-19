@@ -2,8 +2,8 @@ import { lazy, Suspense } from "react";
 import { ClientOnly } from "@tanstack/react-router";
 import { MapPin } from "lucide-react";
 
-import locationImage from "@/assets/location-telsiai-aerial.jpg";
-import locationImageWebp from "@/assets/location-telsiai-aerial.webp";
+import locationImageAsset from "@/assets/location-telsiai-aerial.jpg.asset.json";
+import locationImageWebpAsset from "@/assets/location-telsiai-aerial.webp.asset.json";
 import { EnsoDivider } from "@/components/site/Enso";
 import { Reveal } from "@/components/site/Reveal";
 import { useContent } from "@/content";
@@ -51,9 +51,9 @@ export function LocationSection() {
           <Reveal delay={120} direction="right">
             <div className="group overflow-hidden rounded-2xl shadow-soft">
               <picture>
-                <source srcSet={locationImageWebp} type="image/webp" />
+                <source srcSet={locationImageWebpAsset.url} type="image/webp" />
                 <img
-                  src={locationImage}
+                  src={locationImageAsset.url}
                   alt={home.location.imageAlt}
                   loading="lazy"
                   decoding="async"

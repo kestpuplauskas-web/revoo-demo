@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 
-import heroImage from "@/assets/hero-telsiai-lake.jpg";
-import heroImageWebp from "@/assets/hero-telsiai-lake.webp";
+import heroImageAsset from "@/assets/hero-telsiai-lake.jpg.asset.json";
+import heroImageWebpAsset from "@/assets/hero-telsiai-lake.webp.asset.json";
 import { Enso } from "@/components/site/Enso";
 import { LocaleLink } from "@/components/site/LocaleLink";
 import { useContent } from "@/content";
@@ -44,9 +44,9 @@ export function Hero() {
       className="relative isolate min-h-[92vh] overflow-hidden"
     >
       <picture>
-        <source srcSet={heroImageWebp} type="image/webp" />
+        <source srcSet={heroImageWebpAsset.url} type="image/webp" />
         <img
-          src={heroImage}
+          src={heroImageAsset.url}
           alt={home.hero.imageAlt}
           width={2560}
           height={1440}
