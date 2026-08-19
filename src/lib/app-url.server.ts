@@ -10,7 +10,14 @@ export function appLink(path: string, requestedOrigin?: string): string {
   if (requestedOrigin) {
     try {
       const u = new URL(requestedOrigin);
-      if (u.protocol === "http:" || u.protocol === "https:") base = u.origin;
+      const canonicalHost = new URL(APP_BASE_URL).hostname;
+      const isLocal = u.hostname === "localhost" || u.hostname === "127.0.0.1";
+      const isCanonical = u.hostname === canonicalHost;
+      // Redagavimo/peržiūros aplinkos (lovable.app ir kt.) ignoruojamos —
+      // laiško nuoroda visada turi vesti į kanoninį domeną.
+      if ((u.protocol === "http:" || u.protocol === "https:") && (isLocal || isCanonical)) {
+        base = u.origin;
+      }
     } catch {
       /* ignore */
     }
