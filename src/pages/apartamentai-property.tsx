@@ -74,7 +74,7 @@ export function propertyRoute(locale: Locale) {
           throw redirect({
             to: localizePath("/apartamentai/$propertyId", locale) as never,
             params: { propertyId: slug },
-            search,
+            search: search as never,
             statusCode: 301,
           });
         }
@@ -94,7 +94,7 @@ export function propertyRoute(locale: Locale) {
           throw redirect({
             to: localizePath("/apartamentai/$propertyId", locale) as never,
             params: { propertyId: localSlug },
-            search,
+            search: search as never,
           });
         }
         throw notFound();
