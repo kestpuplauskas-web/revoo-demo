@@ -14,9 +14,9 @@ export const CURRENCIES = [
 export const LANGUAGES = [
   { value: "lt", label: "Lietuvių" },
   { value: "en", label: "English" },
-  { value: "ru", label: "Русский" },
-  { value: "pl", label: "Polski" },
   { value: "de", label: "Deutsch" },
+  { value: "is", label: "Íslenska" },
+  { value: "no", label: "Norsk" },
 ] as const;
 
 export const TIMEZONES = [
