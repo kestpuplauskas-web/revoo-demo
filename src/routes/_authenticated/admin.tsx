@@ -61,8 +61,8 @@ function AdminLayout() {
 
   const navContent = (
     <>
-      <div className="flex items-center gap-2 px-4 py-4 font-semibold">
-        <Building2 className="h-5 w-5 text-primary" />
+      <div className="flex items-center gap-2 px-4 py-4 font-semibold text-sidebar-foreground">
+        <Building2 className="h-5 w-5 text-sidebar-foreground/80" />
         <span>{brandName}</span>
       </div>
       <nav className="flex-1 space-y-1 px-2">
@@ -76,8 +76,8 @@ function AdminLayout() {
                 onClick={() => setNavOpen(false)}
                 className={`flex items-center gap-3 rounded-md px-3 py-2 text-sm ${
                   active
-                    ? "bg-accent font-medium text-foreground"
-                    : "text-muted-foreground hover:bg-accent hover:text-foreground"
+                    ? "bg-sidebar-primary font-medium text-sidebar-primary-foreground"
+                    : "text-sidebar-foreground/75 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
                 }`}
               >
                 <Icon className="h-4 w-4" />
@@ -86,20 +86,20 @@ function AdminLayout() {
             );
           })}
       </nav>
-      <div className="mt-auto space-y-1 border-t px-2 py-3">
+      <div className="mt-auto space-y-1 border-t border-sidebar-border px-2 py-3 text-sidebar-foreground">
           <LanguageSwitcher />
           <a
             href="https://dharma.revoo.lt/"
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => setNavOpen(false)}
-            className="flex items-center gap-3 rounded-md px-3 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-foreground"
+            className="flex items-center gap-3 rounded-md px-3 py-2 text-sm text-sidebar-foreground/75 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
           >
             <Globe className="h-4 w-4" />
             {t("nav.website")}
           </a>
           <button
-            className="flex w-full items-center gap-3 rounded-md px-3 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-foreground"
+            className="flex w-full items-center gap-3 rounded-md px-3 py-2 text-sm text-sidebar-foreground/75 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
             onClick={async () => {
               setNavOpen(false);
               await supabase.auth.signOut();
@@ -115,9 +115,10 @@ function AdminLayout() {
 
   return (
     <div className="flex min-h-screen w-full flex-col bg-background md:flex-row">
-      <aside className="hidden w-60 shrink-0 flex-col border-r bg-card md:flex">
+      <aside className="hidden w-60 shrink-0 flex-col border-r border-sidebar-border bg-sidebar md:flex">
         {navContent}
       </aside>
+
 
       <header className="sticky top-0 z-40 flex items-center gap-2 border-b bg-card px-3 py-2 md:hidden">
         <Sheet open={navOpen} onOpenChange={setNavOpen}>
@@ -130,7 +131,7 @@ function AdminLayout() {
               <Menu className="h-5 w-5" />
             </button>
           </SheetTrigger>
-          <SheetContent side="left" className="flex w-72 flex-col p-0">
+          <SheetContent side="left" className="flex w-72 flex-col bg-sidebar p-0">
             <SheetTitle className="sr-only">{brandName}</SheetTitle>
             {navContent}
           </SheetContent>
