@@ -131,7 +131,7 @@ function AdminLayout() {
               <Menu className="h-5 w-5" />
             </button>
           </SheetTrigger>
-          <SheetContent side="left" className="flex w-72 flex-col p-0">
+          <SheetContent side="left" className="flex w-72 flex-col bg-sidebar p-0">
             <SheetTitle className="sr-only">{brandName}</SheetTitle>
             {navContent}
           </SheetContent>
