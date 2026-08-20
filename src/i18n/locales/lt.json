@@ -133,8 +133,10 @@
       "total": "Suma (€)",
       "vatNumber": "PVM mokėtojo kodas *"
     },
+    "found_few": "{{count}} rastos",
+    "found_many": "{{count}} rastos",
     "found_one": "{{count}} rasta",
-    "found_other": "{{count}} rastos",
+    "found_other": "{{count}} rastų",
     "from": "Nuo",
     "invoice": {
       "issuedOn": "Sugeneruota {{date}}.",
