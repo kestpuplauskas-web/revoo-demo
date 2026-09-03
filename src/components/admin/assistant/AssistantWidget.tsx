@@ -3,7 +3,8 @@ import { useRouter, useRouterState } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { useTranslation } from "react-i18next";
-import { ArrowRight, Loader2, MessageCircleQuestion, SendHorizonal, Sparkles, Trash2, X } from "lucide-react";
+import { ArrowRight, Loader2, MessageCircleQuestion, SendHorizonal, Trash2, X } from "lucide-react";
+import evaAvatar from "@/assets/eva-avatar.jpg.asset.json";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -19,6 +20,17 @@ import { ASSISTANT_MAX_MESSAGE_CHARS } from "@/lib/assistant-knowledge";
 type LocalMessage = Pick<AssistantMessage, "id" | "role" | "content">;
 
 const LINK_RE = /\[\[link:(\/admin[^|\]]*)\|([^\]]+)\]\]/g;
+
+/** Apvalus Evos avataras su subtiliu rėmeliu. */
+function EvaAvatar({ className = "h-9 w-9" }: { className?: string }) {
+  return (
+    <img
+      src={evaAvatar.url}
+      alt="Eva"
+      className={`${className} shrink-0 rounded-full object-cover ring-2 ring-primary/30 ring-offset-2 ring-offset-background`}
+    />
+  );
+}
 
 /** Paverčia paprastą markdown (**bold**, sąrašai) ir [[link:...]] žymas į React. */
 function renderContent(text: string, onNavigate: (href: string) => void): ReactNode[] {
@@ -212,24 +224,33 @@ export function AssistantWidget() {
           side="right"
           className="flex w-full flex-col gap-0 p-0 sm:max-w-md [&>button]:hidden"
         >
-          <div className="flex items-center gap-2 border-b px-4 py-3">
-            <Sparkles className="h-4 w-4 text-primary" />
+          <div className="flex items-center gap-3 border-b px-4 py-3">
+            <EvaAvatar className="h-9 w-9" />
             <div className="min-w-0 flex-1">
-              <SheetTitle className="text-sm font-semibold">{t("assistant.title")}</SheetTitle>
+              <SheetTitle className="text-sm font-semibold leading-tight">{t("assistant.title")}</SheetTitle>
               <SheetDescription className="truncate text-xs">{t("assistant.subtitle")}</SheetDescription>
             </div>
-            <Button
-              variant="ghost"
-              size="icon"
-              aria-label={t("assistant.clear")}
-              disabled={clear.isPending || messages.length === 0}
-              onClick={() => clear.mutate()}
-            >
-              <Trash2 className="h-4 w-4" />
-            </Button>
-            <Button variant="ghost" size="icon" aria-label={t("common.close")} onClick={() => setOpen(false)}>
-              <X className="h-4 w-4" />
-            </Button>
+            <div className="flex shrink-0 items-center gap-1">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-9 w-9 shrink-0"
+                aria-label={t("assistant.clear")}
+                disabled={clear.isPending || messages.length === 0}
+                onClick={() => clear.mutate()}
+              >
+                <Trash2 className="h-4 w-4" />
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-9 w-9 shrink-0"
+                aria-label={t("common.close")}
+                onClick={() => setOpen(false)}
+              >
+                <X className="h-4 w-4" />
+              </Button>
+            </div>
           </div>
 
           <div className="flex-1 space-y-3 overflow-y-auto px-4 py-4 text-sm">
@@ -240,15 +261,18 @@ export function AssistantWidget() {
             ) : null}
 
             {showSuggestions ? (
-              <div className="space-y-2">
-                <p className="text-muted-foreground">{t("assistant.intro")}</p>
+              <div className="space-y-3">
+                <div className="flex flex-col items-center gap-3 pt-2 text-center">
+                  <EvaAvatar className="h-16 w-16" />
+                  <p className="text-muted-foreground">{t("assistant.intro")}</p>
+                </div>
                 <div className="flex flex-col gap-2">
                   {suggestions.map((s) => (
                     <button
                       key={s}
                       type="button"
                       onClick={() => void send(s)}
-                      className="rounded-md border bg-card px-3 py-2 text-left text-sm hover:bg-accent"
+                      className="rounded-lg border border-border bg-card px-3 py-2 text-left text-sm font-medium text-foreground shadow-sm transition-colors hover:border-primary/60 hover:bg-primary/10 hover:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                     >
                       {s}
                     </button>
@@ -292,7 +316,13 @@ export function AssistantWidget() {
                 disabled={pending}
                 className="min-h-[44px] resize-none"
               />
-              <Button type="submit" size="icon" disabled={pending || !input.trim()} aria-label={t("assistant.send")}>
+              <Button
+                type="submit"
+                size="icon"
+                className="h-11 w-11 shrink-0"
+                disabled={pending || !input.trim()}
+                aria-label={t("assistant.send")}
+              >
                 {pending ? <Loader2 className="h-4 w-4 animate-spin" /> : <SendHorizonal className="h-4 w-4" />}
               </Button>
             </div>
