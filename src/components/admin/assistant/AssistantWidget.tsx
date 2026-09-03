@@ -21,7 +21,7 @@ type LocalMessage = Pick<AssistantMessage, "id" | "role" | "content">;
 const LINK_RE = /\[\[link:(\/admin[^|\]]*)\|([^\]]+)\]\]/g;
 
 /** Paverčia paprastą markdown (**bold**, sąrašai) ir [[link:...]] žymas į React. */
-function renderContent(text: string): ReactNode[] {
+function renderContent(text: string, onNavigate: (href: string) => void): ReactNode[] {
   const links: { path: string; label: string }[] = [];
   const body = text
     .replace(LINK_RE, (_m, path: string, label: string) => {
@@ -50,14 +50,15 @@ function renderContent(text: string): ReactNode[] {
     nodes.push(
       <div key="links" className="mt-2 flex flex-wrap gap-2">
         {links.map((l) => (
-          <Link
+          <button
             key={l.path + l.label}
-            to={l.path}
+            type="button"
+            onClick={() => onNavigate(l.path)}
             className="inline-flex items-center gap-1 rounded-md border border-primary/40 bg-background px-2.5 py-1 text-xs font-medium text-primary hover:bg-primary/10"
           >
             {l.label}
             <ArrowRight className="h-3 w-3" />
-          </Link>
+          </button>
         ))}
       </div>,
     );
