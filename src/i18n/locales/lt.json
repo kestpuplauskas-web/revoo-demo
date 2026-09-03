@@ -13,10 +13,10 @@
     "placeholder": "Paklauskite, kaip ką nors padaryti…",
     "intro": "Sveiki! 👋 Esu Eva –  virtuali Revoo asistentė. Galiu atsakyti į klausimus, paaiškinti, kaip atlikti užduotis šioje sistemoje ir padėti rasti reikiamą informaciją. Kuo galiu padėti?",
     "suggestions": [
-      "Kaip pakeisti kambarių nuotraukas svetainėje?",
-      "Kaip pakeisti kambario pavadinimą anglų kalba?",
-      "Kaip įjungti automatinį rezervacijų patvirtinimą?",
-      "Kur nustatyti PVM tarifą ir sąskaitų numeraciją?"
+      "Koks šiuo metu viešbučio užimtumas ir ar jis normalus rinkoje?",
+      "Kiek pajamų uždirbome šiandien, vakar ir šiais metais?",
+      "Koks dabartinis ROI ir ką daryti, kad padidinčiau užimtumą?",
+      "Kaip pakeisti kambarių nuotraukas svetainėje?"
     ],
     "disclaimer": "Asistentas tik pataria – nustatymų nekeičia.",
     "error": "Nepavyko gauti atsakymo. Pabandykite dar kartą.",
