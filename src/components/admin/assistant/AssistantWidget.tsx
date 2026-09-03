@@ -21,6 +21,17 @@ type LocalMessage = Pick<AssistantMessage, "id" | "role" | "content">;
 
 const LINK_RE = /\[\[link:(\/admin[^|\]]*)\|([^\]]+)\]\]/g;
 
+/** Apvalus Evos avataras su subtiliu rėmeliu. */
+function EvaAvatar({ className = "h-9 w-9" }: { className?: string }) {
+  return (
+    <img
+      src={evaAvatar.url}
+      alt="Eva"
+      className={`${className} shrink-0 rounded-full object-cover ring-2 ring-primary/30 ring-offset-2 ring-offset-background`}
+    />
+  );
+}
+
 /** Paverčia paprastą markdown (**bold**, sąrašai) ir [[link:...]] žymas į React. */
 function renderContent(text: string, onNavigate: (href: string) => void): ReactNode[] {
   const links: { path: string; label: string }[] = [];
