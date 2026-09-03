@@ -13,10 +13,10 @@
     "placeholder": "Ask how to do something…",
     "intro": "Hi! I'll help you find your way around the admin panel. For example:",
     "suggestions": [
-      "How do I change room photos on the website?",
-      "How do I change a room's name in English?",
-      "How do I enable automatic booking confirmation?",
-      "Where do I set the VAT rate and invoice numbering?"
+      "What is our current occupancy and is it normal for the market?",
+      "How much revenue did we make today, yesterday and this year?",
+      "What is our ROI and how can I increase occupancy?",
+      "How do I change room photos on the website?"
     ],
     "disclaimer": "The assistant only advises – it never changes settings.",
     "error": "Could not get a reply. Please try again.",
