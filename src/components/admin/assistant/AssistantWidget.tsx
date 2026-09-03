@@ -76,7 +76,12 @@ export function AssistantWidget() {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
   const qc = useQueryClient();
+  const router = useRouter();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const onNavigate = (href: string) => {
+    setOpen(false);
+    void router.navigate({ href });
+  };
 
   const fetchHistory = useServerFn(getAssistantHistory);
   const clearFn = useServerFn(clearAssistantHistory);
@@ -253,12 +258,12 @@ export function AssistantWidget() {
             ) : null}
 
             {messages.map((m) => (
-              <MessageBubble key={m.id} message={m} />
+              <MessageBubble key={m.id} message={m} onNavigate={onNavigate} />
             ))}
             {streaming ? (
-              <MessageBubble message={streaming} typing={streaming.content === ""} />
+              <MessageBubble message={streaming} typing={streaming.content === ""} onNavigate={onNavigate} />
             ) : pending ? (
-              <MessageBubble message={{ id: "typing", role: "assistant", content: "" }} typing />
+              <MessageBubble message={{ id: "typing", role: "assistant", content: "" }} typing onNavigate={onNavigate} />
             ) : null}
             <div ref={bottomRef} />
           </div>
@@ -299,7 +304,15 @@ export function AssistantWidget() {
   );
 }
 
-function MessageBubble({ message, typing }: { message: LocalMessage; typing?: boolean }) {
+function MessageBubble({
+  message,
+  typing,
+  onNavigate,
+}: {
+  message: LocalMessage;
+  typing?: boolean;
+  onNavigate: (href: string) => void;
+}) {
   const isUser = message.role === "user";
   return (
     <div className={`flex ${isUser ? "justify-end" : "justify-start"}`}>
@@ -317,7 +330,7 @@ function MessageBubble({ message, typing }: { message: LocalMessage; typing?: bo
         ) : isUser ? (
           <p className="whitespace-pre-wrap leading-relaxed">{message.content}</p>
         ) : (
-          renderContent(message.content)
+          renderContent(message.content, onNavigate)
         )}
       </div>
     </div>
