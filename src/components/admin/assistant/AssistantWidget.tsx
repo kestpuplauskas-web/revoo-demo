@@ -219,18 +219,27 @@ export function AssistantWidget() {
               <SheetTitle className="text-sm font-semibold leading-tight">{t("assistant.title")}</SheetTitle>
               <SheetDescription className="truncate text-xs">{t("assistant.subtitle")}</SheetDescription>
             </div>
-            <Button
-              variant="ghost"
-              size="icon"
-              aria-label={t("assistant.clear")}
-              disabled={clear.isPending || messages.length === 0}
-              onClick={() => clear.mutate()}
-            >
-              <Trash2 className="h-4 w-4" />
-            </Button>
-            <Button variant="ghost" size="icon" aria-label={t("common.close")} onClick={() => setOpen(false)}>
-              <X className="h-4 w-4" />
-            </Button>
+            <div className="flex shrink-0 items-center gap-1">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-9 w-9 shrink-0"
+                aria-label={t("assistant.clear")}
+                disabled={clear.isPending || messages.length === 0}
+                onClick={() => clear.mutate()}
+              >
+                <Trash2 className="h-4 w-4" />
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-9 w-9 shrink-0"
+                aria-label={t("common.close")}
+                onClick={() => setOpen(false)}
+              >
+                <X className="h-4 w-4" />
+              </Button>
+            </div>
           </div>
 
           <div className="flex-1 space-y-3 overflow-y-auto px-4 py-4 text-sm">
