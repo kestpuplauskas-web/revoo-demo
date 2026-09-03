@@ -54,6 +54,7 @@ import { Route as AuthenticatedAdminSettingsRouteImport } from './routes/_authen
 import { Route as AuthenticatedStaffIndexRouteImport } from './routes/_authenticated/staff.index'
 import { Route as AuthenticatedStaffIdRouteImport } from './routes/_authenticated/staff.$id'
 import { Route as ApartamentaiTipasCategorySlugRouteImport } from './routes/apartamentai.tipas.$categorySlug'
+import { Route as ApiAssistantChatRouteImport } from './routes/api/assistant/chat'
 import { Route as ApiPublicIcalSyncRouteImport } from './routes/api/public/ical-sync'
 import { Route as ApiPublicNotificationsCronRouteImport } from './routes/api/public/notifications-cron'
 import { Route as EnApartamentaiIndexRouteImport } from './routes/en/apartamentai.index'
@@ -316,6 +317,11 @@ const ApartamentaiTipasCategorySlugRoute =
     path: '/tipas/$categorySlug',
     getParentRoute: () => ApartamentaiRoute,
   } as any)
+const ApiAssistantChatRoute = ApiAssistantChatRouteImport.update({
+  id: '/api/assistant/chat',
+  path: '/api/assistant/chat',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicIcalSyncRoute = ApiPublicIcalSyncRouteImport.update({
   id: '/api/public/ical-sync',
   path: '/api/public/ical-sync',
@@ -525,6 +531,7 @@ export interface FileRoutesByFullPath {
   '/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/staff/$id': typeof AuthenticatedStaffIdRoute
   '/apartamentai/tipas/$categorySlug': typeof ApartamentaiTipasCategorySlugRoute
+  '/api/assistant/chat': typeof ApiAssistantChatRoute
   '/api/public/ical-sync': typeof ApiPublicIcalSyncRoute
   '/api/public/notifications-cron': typeof ApiPublicNotificationsCronRoute
   '/en/apartamentai/$propertyId': typeof EnApartamentaiPropertyIdRoute
@@ -594,6 +601,7 @@ export interface FileRoutesByTo {
   '/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/staff/$id': typeof AuthenticatedStaffIdRoute
   '/apartamentai/tipas/$categorySlug': typeof ApartamentaiTipasCategorySlugRoute
+  '/api/assistant/chat': typeof ApiAssistantChatRoute
   '/api/public/ical-sync': typeof ApiPublicIcalSyncRoute
   '/api/public/notifications-cron': typeof ApiPublicNotificationsCronRoute
   '/en/apartamentai/$propertyId': typeof EnApartamentaiPropertyIdRoute
@@ -672,6 +680,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/_authenticated/staff/$id': typeof AuthenticatedStaffIdRoute
   '/apartamentai/tipas/$categorySlug': typeof ApartamentaiTipasCategorySlugRoute
+  '/api/assistant/chat': typeof ApiAssistantChatRoute
   '/api/public/ical-sync': typeof ApiPublicIcalSyncRoute
   '/api/public/notifications-cron': typeof ApiPublicNotificationsCronRoute
   '/en/apartamentai/$propertyId': typeof EnApartamentaiPropertyIdRoute
@@ -750,6 +759,7 @@ export interface FileRouteTypes {
     | '/admin/settings'
     | '/staff/$id'
     | '/apartamentai/tipas/$categorySlug'
+    | '/api/assistant/chat'
     | '/api/public/ical-sync'
     | '/api/public/notifications-cron'
     | '/en/apartamentai/$propertyId'
@@ -819,6 +829,7 @@ export interface FileRouteTypes {
     | '/admin/settings'
     | '/staff/$id'
     | '/apartamentai/tipas/$categorySlug'
+    | '/api/assistant/chat'
     | '/api/public/ical-sync'
     | '/api/public/notifications-cron'
     | '/en/apartamentai/$propertyId'
@@ -896,6 +907,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/settings'
     | '/_authenticated/staff/$id'
     | '/apartamentai/tipas/$categorySlug'
+    | '/api/assistant/chat'
     | '/api/public/ical-sync'
     | '/api/public/notifications-cron'
     | '/en/apartamentai/$propertyId'
@@ -948,6 +960,7 @@ export interface RootRouteChildren {
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TaisyklesRoute: typeof TaisyklesRoute
   RezervacijaPatvirtintaRoute: typeof RezervacijaPatvirtintaRoute
+  ApiAssistantChatRoute: typeof ApiAssistantChatRoute
   ApiPublicIcalSyncRoute: typeof ApiPublicIcalSyncRoute
   ApiPublicNotificationsCronRoute: typeof ApiPublicNotificationsCronRoute
   ApiPublicV1AvailabilityRoute: typeof ApiPublicV1AvailabilityRoute
@@ -1275,6 +1288,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/apartamentai/tipas/$categorySlug'
       preLoaderRoute: typeof ApartamentaiTipasCategorySlugRouteImport
       parentRoute: typeof ApartamentaiRoute
+    }
+    '/api/assistant/chat': {
+      id: '/api/assistant/chat'
+      path: '/api/assistant/chat'
+      fullPath: '/api/assistant/chat'
+      preLoaderRoute: typeof ApiAssistantChatRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/api/public/ical-sync': {
       id: '/api/public/ical-sync'
@@ -1710,6 +1730,7 @@ const rootRouteChildren: RootRouteChildren = {
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   TaisyklesRoute: TaisyklesRoute,
   RezervacijaPatvirtintaRoute: RezervacijaPatvirtintaRoute,
+  ApiAssistantChatRoute: ApiAssistantChatRoute,
   ApiPublicIcalSyncRoute: ApiPublicIcalSyncRoute,
   ApiPublicNotificationsCronRoute: ApiPublicNotificationsCronRoute,
   ApiPublicV1AvailabilityRoute: ApiPublicV1AvailabilityRoute,

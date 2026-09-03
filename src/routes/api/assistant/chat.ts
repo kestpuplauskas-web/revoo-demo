@@ -152,9 +152,7 @@ async function handlePost(request: Request) {
                 send({ t: delta });
               }
             } catch {
-              // nepilna eilutė – lauksime kito gabalo
-              buffer = line + "\n" + buffer;
-              break;
+              // eilutė užbaigta \n, bet ne JSON – praleidžiame
             }
           }
         }
