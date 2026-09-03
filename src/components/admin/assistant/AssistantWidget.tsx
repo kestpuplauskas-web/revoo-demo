@@ -213,10 +213,10 @@ export function AssistantWidget() {
           side="right"
           className="flex w-full flex-col gap-0 p-0 sm:max-w-md [&>button]:hidden"
         >
-          <div className="flex items-center gap-2 border-b px-4 py-3">
-            <Sparkles className="h-4 w-4 text-primary" />
+          <div className="flex items-center gap-3 border-b px-4 py-3">
+            <EvaAvatar className="h-9 w-9" />
             <div className="min-w-0 flex-1">
-              <SheetTitle className="text-sm font-semibold">{t("assistant.title")}</SheetTitle>
+              <SheetTitle className="text-sm font-semibold leading-tight">{t("assistant.title")}</SheetTitle>
               <SheetDescription className="truncate text-xs">{t("assistant.subtitle")}</SheetDescription>
             </div>
             <Button
