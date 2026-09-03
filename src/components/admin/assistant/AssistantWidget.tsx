@@ -250,15 +250,18 @@ export function AssistantWidget() {
             ) : null}
 
             {showSuggestions ? (
-              <div className="space-y-2">
-                <p className="text-muted-foreground">{t("assistant.intro")}</p>
+              <div className="space-y-3">
+                <div className="flex flex-col items-center gap-3 pt-2 text-center">
+                  <EvaAvatar className="h-16 w-16" />
+                  <p className="text-muted-foreground">{t("assistant.intro")}</p>
+                </div>
                 <div className="flex flex-col gap-2">
                   {suggestions.map((s) => (
                     <button
                       key={s}
                       type="button"
                       onClick={() => void send(s)}
-                      className="rounded-md border bg-card px-3 py-2 text-left text-sm hover:bg-accent"
+                      className="rounded-lg border border-border bg-card px-3 py-2 text-left text-sm font-medium text-foreground shadow-sm transition-colors hover:border-primary/60 hover:bg-primary/10 hover:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                     >
                       {s}
                     </button>
