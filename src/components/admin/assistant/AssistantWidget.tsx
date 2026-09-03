@@ -305,7 +305,13 @@ export function AssistantWidget() {
                 disabled={pending}
                 className="min-h-[44px] resize-none"
               />
-              <Button type="submit" size="icon" disabled={pending || !input.trim()} aria-label={t("assistant.send")}>
+              <Button
+                type="submit"
+                size="icon"
+                className="h-11 w-11 shrink-0"
+                disabled={pending || !input.trim()}
+                aria-label={t("assistant.send")}
+              >
                 {pending ? <Loader2 className="h-4 w-4 animate-spin" /> : <SendHorizonal className="h-4 w-4" />}
               </Button>
             </div>
