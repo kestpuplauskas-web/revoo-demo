@@ -1,4 +1,5 @@
 import { Reveal } from "@/components/site/Reveal";
+import { amenityIconForLabel } from "@/lib/amenity-icons";
 import { useContent } from "@/content";
 
 export type Fact = { label: string; value: string };
