@@ -19,13 +19,19 @@ export function StayFacts({ facts, amenities }: { facts: Fact[]; amenities: stri
       {amenities.length ? (
         <div className="mt-10">
           <h2 className="label-caps text-sage">{common.labels.amenities}</h2>
-          <ul className="mt-5 grid gap-3 text-sm leading-relaxed text-stone sm:grid-cols-2">
-            {amenities.map((amenity) => (
-              <li key={amenity} className="flex items-start gap-3">
-                <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-sage" aria-hidden />
-                {amenity}
-              </li>
-            ))}
+          <ul className="mt-5 grid gap-x-8 text-sm leading-relaxed text-stone sm:grid-cols-2 lg:grid-cols-3">
+            {amenities.map((amenity) => {
+              const Icon = amenityIconForLabel(amenity);
+              return (
+                <li
+                  key={amenity}
+                  className="flex items-center justify-between gap-4 border-b border-border py-4"
+                >
+                  <span className="font-display text-base text-ink">{amenity}</span>
+                  <Icon className="h-6 w-6 shrink-0 text-stone" strokeWidth={1.25} aria-hidden />
+                </li>
+              );
+            })}
           </ul>
         </div>
       ) : null}
