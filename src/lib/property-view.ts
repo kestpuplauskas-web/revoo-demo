@@ -149,3 +149,18 @@ function dedupeImages(values: Array<string | null | undefined>): string[] {
 export function formatPrice(value: number): string {
   return Number.isInteger(value) ? `${value}` : value.toFixed(2).replace(".", ",");
 }
+/** Reverse lookup: translated label -> engine code (both locales). */
+const labelToCode: Record<string, string> = (() => {
+  const map: Record<string, string> = {};
+  for (const dict of [amenityLabelsLt, amenityLabelsEn]) {
+    for (const [code, label] of Object.entries(dict)) {
+      const key = label.trim().toLowerCase();
+      if (!(key in map)) map[key] = code;
+    }
+  }
+  return map;
+})();
+
+export function amenityCodeByLabel(label: string): string | null {
+  return labelToCode[label.trim().toLowerCase()] ?? null;
+}
