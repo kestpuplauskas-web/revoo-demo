@@ -251,6 +251,26 @@ function PropertyPage({ locale }: { locale: Locale }) {
         </button>
       </PageHero>
 
+      {grid.length ? (
+        <PageSection tone="linen">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {grid.map((url, index) => (
+              <Reveal key={url} delay={index * 90}>
+                <div className="aspect-[4/3] overflow-hidden rounded-md bg-warm-white shadow-soft">
+                  <img
+                    src={url}
+                    alt={`${data.name} — ${c.common.brand}`}
+                    loading="lazy"
+                    decoding="async"
+                    className="photo-zoom h-full w-full object-cover"
+                  />
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </PageSection>
+      ) : null}
+
       <PropertyIntro
         {...(view.meta ? { meta: view.meta } : {})}
         paragraphs={paragraphs}
@@ -284,26 +304,6 @@ function PropertyPage({ locale }: { locale: Locale }) {
           </Reveal>
         </div>
       </PropertyIntro>
-
-      {grid.length ? (
-        <PageSection tone="linen">
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {grid.map((url, index) => (
-              <Reveal key={url} delay={index * 90}>
-                <div className="aspect-[4/3] overflow-hidden rounded-md bg-warm-white shadow-soft">
-                  <img
-                    src={url}
-                    alt={`${data.name} — ${c.common.brand}`}
-                    loading="lazy"
-                    decoding="async"
-                    className="photo-zoom h-full w-full object-cover"
-                  />
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </PageSection>
-      ) : null}
 
       <PageSection tone="linen">
         <StayCrossLinks currentId={data.id} />
