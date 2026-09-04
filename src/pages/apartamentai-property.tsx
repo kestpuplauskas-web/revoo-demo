@@ -251,6 +251,15 @@ function PropertyPage({ locale }: { locale: Locale }) {
         </button>
       </PageHero>
 
+      <PropertyIntro
+        {...(view.meta ? { meta: view.meta } : {})}
+        paragraphs={paragraphs}
+        image={sideImage}
+        imageAlt={view.imageAlt}
+        facts={facts}
+        amenities={view.amenities}
+      />
+
       {grid.length ? (
         <PageSection tone="linen">
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -271,15 +280,8 @@ function PropertyPage({ locale }: { locale: Locale }) {
         </PageSection>
       ) : null}
 
-      <PropertyIntro
-        {...(view.meta ? { meta: view.meta } : {})}
-        paragraphs={paragraphs}
-        image={sideImage}
-        imageAlt={view.imageAlt}
-        facts={facts}
-        amenities={view.amenities}
-      >
-        <div className="mt-16 grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,20rem)] lg:items-start">
+      <PageSection>
+        <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,20rem)] lg:items-start">
           <Reveal direction="left">
             <AvailabilityCalendar
               occupied={data.occupied}
@@ -303,7 +305,7 @@ function PropertyPage({ locale }: { locale: Locale }) {
             </div>
           </Reveal>
         </div>
-      </PropertyIntro>
+      </PageSection>
 
       <PageSection tone="linen">
         <StayCrossLinks currentId={data.id} />
