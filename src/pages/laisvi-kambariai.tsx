@@ -119,13 +119,12 @@ function ResultsPage({ locale }: { locale: Locale }) {
                 </button>
               </div>
             ) : loading ? (
-              <div className="grid gap-6">
-                {[0, 1, 2].map((key) => (
-                  <div
-                    key={key}
-                    className="h-56 animate-pulse rounded-md bg-warm-white/70 shadow-soft"
-                  />
-                ))}
+              <div className="mx-auto max-w-md py-16 text-center">
+                <div className="relative h-1.5 w-full overflow-hidden rounded-full bg-border">
+                  <div className="absolute inset-y-0 left-0 w-1/3 rounded-full bg-sage animate-[loading-bar_1.2s_ease-in-out_infinite]" />
+                </div>
+                <p className="mt-6 font-display text-lg text-ink">{common.results.loadingTitle}</p>
+                <p className="mt-2 text-sm text-stone">{common.results.loadingText}</p>
               </div>
             ) : rooms.length === 0 ? (
               <div className="py-12 text-center">
