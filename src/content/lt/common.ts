@@ -227,6 +227,8 @@ export const common = {
     title: "Laisvi pasirinktomis datomis",
     missingDates: "Pasirinkite atvykimo ir išvykimo datas — parodysime, kas laisva.",
     loading: "Tikriname laisvus numerius…",
+    loadingTitle: "Minutėlę…",
+    loadingText: "Ieškome laisvų apartamentų pagal jūsų datas.",
     empty: "Šiomis dienomis laisvų numerių nėra",
     emptyHint: "Pabandykite kitas datas arba sumažinkite svečių skaičių.",
     error: "Nepavyko patikrinti laisvų numerių.",
