@@ -246,6 +246,8 @@ export const common = {
     title: "Available on your dates",
     missingDates: "Choose check-in and check-out dates and we'll show what is available.",
     loading: "Checking availability…",
+    loadingTitle: "One moment…",
+    loadingText: "We are looking for available apartments for your dates.",
     empty: "No rooms available on these dates",
     emptyHint: "Try other dates or reduce the number of guests.",
     error: "Could not check availability.",
