@@ -1338,6 +1338,30 @@ export type Database = {
           },
         ]
       }
+      system_snapshots: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          id: string
+          name: string
+          payload: Json
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          name?: string
+          payload: Json
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          name?: string
+          payload?: Json
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string
@@ -1373,6 +1397,10 @@ export type Database = {
           series: string
         }[]
       }
+      create_system_snapshot: {
+        Args: { _created_by: string; _name: string }
+        Returns: string
+      }
       get_active_booked_dates: {
         Args: never
         Returns: {
@@ -1395,6 +1423,10 @@ export type Database = {
           _user_id: string
         }
         Returns: boolean
+      }
+      restore_system_snapshot: {
+        Args: { _snapshot_id: string }
+        Returns: undefined
       }
     }
     Enums: {
