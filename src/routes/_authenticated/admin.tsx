@@ -49,6 +49,10 @@ function AdminLayout() {
     );
   }
 
+  const roleLabel = role.isDeveloper
+    ? t("settings.users.roleDeveloper")
+    : t("settings.users.roleAdmin");
+
   const links = [
     { to: "/admin", label: t("nav.dashboard"), icon: LayoutDashboard },
     { to: "/admin/bookings", label: t("nav.bookings"), icon: Calendar },
@@ -88,6 +92,12 @@ function AdminLayout() {
           })}
       </nav>
       <div className="mt-auto space-y-1 border-t border-sidebar-border px-2 py-3 text-sidebar-foreground">
+          <div className="px-3 pb-2">
+            <p className="truncate text-xs text-sidebar-foreground/60">{role.email}</p>
+            <span className="mt-1 inline-block rounded-full border border-sidebar-border px-2 py-0.5 text-[11px] font-medium text-sidebar-foreground/90">
+              {roleLabel}
+            </span>
+          </div>
           <LanguageSwitcher />
           <a
             href="https://dharma.revoo.lt/"

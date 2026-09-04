@@ -853,7 +853,8 @@
     "nav": {
       "api": "API access",
       "integrations": "Integrations",
-      "users": "Users"
+      "users": "Users",
+      "system": "System"
     },
     "saveFailed": "Could not save settings.",
     "saved": "Settings saved.",
@@ -1172,12 +1173,38 @@
       "roleHousekeeper": "Housekeeper",
       "roleUser": "User",
       "saveName": "Save",
-      "sending": "Sending…"
+      "sending": "Sending…",
+      "roleDeveloper": "Developer",
+      "developerOnlyHint": "Only a developer can invite or remove users."
     },
     "validation": {
       "email": "Invalid email format",
       "hexColor": "Use HEX format, e.g. #0F172A",
       "timeFormat": "Format must be HH:MM"
+    },
+    "system": {
+      "saveTitle": "Save as default state",
+      "saveDesc": "Takes a snapshot of all system data (settings, properties, templates, translations, bookings, expenses). You can roll back to it later.",
+      "nameLabel": "Snapshot name",
+      "namePlaceholder": "e.g. Demo version 2026-09",
+      "saving": "Saving…",
+      "saveButton": "Save current state",
+      "saved": "Default state saved.",
+      "failed": "Action failed.",
+      "restoreTitle": "Back to default",
+      "restoreDesc": "All system data is rolled back to the last saved default state. Records created or changed afterwards will be lost. User accounts and uploaded files are not touched.",
+      "backToDefault": "Back to default — reset system",
+      "restoring": "Restoring…",
+      "restored": "System restored to the default state.",
+      "confirmTitle": "Reset the system?",
+      "confirmDesc": "All data will be replaced with the snapshot from {{date}}. This cannot be undone.",
+      "confirmButton": "Yes, reset",
+      "noSnapshot": "No snapshots yet. Save the current state first.",
+      "historyTitle": "Saved snapshots",
+      "unnamed": "Unnamed",
+      "current": "Default",
+      "restoreThis": "Restore this",
+      "counts": "Properties: {{properties}} · Bookings: {{bookings}} · Templates: {{templates}} · Translations: {{translations}}"
     }
   },
   "staff": {

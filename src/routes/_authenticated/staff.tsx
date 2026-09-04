@@ -51,6 +51,9 @@ function StaffLayout() {
           <span>{t("staff.title")}</span>
         </div>
         <div className="flex items-center gap-1">
+          <span className="hidden text-xs text-muted-foreground sm:inline">
+            {role?.email} · {role?.isDeveloper ? t("settings.users.roleDeveloper") : role?.isAdmin ? t("settings.users.roleAdmin") : t("settings.users.roleHousekeeper")}
+          </span>
           <LanguageSwitcher className="flex items-center gap-2 rounded-md px-2 py-1.5 text-sm text-muted-foreground hover:bg-accent hover:text-foreground" />
           <Button variant="ghost" size="sm" onClick={signOut}>
             <LogOut className="mr-2 h-4 w-4" /> {t("nav.signOut")}
