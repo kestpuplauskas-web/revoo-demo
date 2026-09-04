@@ -17,6 +17,37 @@ Abu projektai sujungiami su GitHub. Bendros dalys (pvz., patogumų ikonos) gyven
 **C. Vienas projektas vietoj dviejų**
 Jei abu projektai iš esmės tas pats produktas skirtingiems klientams, juos galima sujungti į vieną su keliais „prekės ženklais". Tada perkėlimo klausimo nebelieka.
 
+## Detalus C variantas: vienas projektas, keli prekės ženklai
+
+### Ką tai reiškia
+
+Bendras backendas, admin panelė, rezervacijų logika, duomenų bazė ir visi UI komponentai lieka vienodi. Skiriasi tik tai, ką mato galutinis lankytojas: logotipas, spalvų paletė, numatytoji kalba, valiuta, pagrindinio puslapio turinys ir savas domenas.
+
+### Kaip atrodytų techniškai
+
+- Savas duomenų įrašas kiekvienam prekės ženklui: pvz., lentelė `public.brands` su laukais `slug`, `name`, `domains`, `logo_asset`, `primary_color`, `default_locale`, `default_currency`.
+- Puslapis nustato prekės ženklą pagal `window.location.hostname` arba pagal `?brand=...` parametrą, kai kuriamas turinys.
+- Turinio failai (`src/content/lt.ts`, `src/content/en.ts` ir pan.) pakeičiami į funkcijas, kurios priima `brand` ir grąžina tekstus bei nuotraukas pagal pasirinktą ženklą.
+- `src/styles.css` gauna CSS kintamuosius, kuriuos `BrandProvider` perrašo dinamiškai, arba naudoja skirtingas klases pagal brand slapyvardį.
+- Nuotraukos, logotipai ir socialiniai vaizdai gali būti skirtingi pagal prekės ženklą; jie saugomi `brand_assets` lentelėje arba atskiruose kataloguose.
+- Domeno lygmenyje: `demo.revoo.site` rodo Revoo, o `demo.rentivo.lt` — Rentivo. Tai konfigūruojama publikavimo / CDN nustatymuose, ne kode.
+
+### Ką gautumėte
+
+- Bet koks funkcionalumas įdiegtas vienoje sistemoje matomas visuose prekės ženkluose be jokio kopijavimo.
+- Vienas duomenų šaltinis, viena priežiūra, bendra statistika, bendros rezervacijos.
+- Galimybė paleisti naują prekės ženklą per kelias minutes: tik įrašas duomenų bazėje + domenas + logotipas.
+
+### Ką prarastumėte / ką reikia apsvarstyti
+
+- Jei vienas prekės ženklas turi labai skirtingą dizainą, gali tekti daugiau sąlyginio UI.
+- Visi klientai dalijasi ta pačia infrastruktūra, todėl trikdis paliečia visus.
+- Migracija iš dviejų projektų į vieną reikalauja vienkartinio duomenų perkėlimo ir testavimo.
+
+### Kada C variantas tinka
+
+Tinka, kai abu projektai yra to paties tipo produktas (pvz., būsto nuomos platforma), tik su skirtingu klientų pristatymu. Netinka, jei ateityje vienas projektas turės visiškai kitokią verslo logiką.
+
 ## Ką darysiu, kai pasirinksite A
 
 1. Įrašysiu į projekto atmintį taisyklę: `Boom [raktažodis] @projektas` = perkelti nurodytą (arba paskutinį) pakeitimą į tą projektą identiškai, nieko kito nekeičiant.
