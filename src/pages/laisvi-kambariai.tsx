@@ -18,6 +18,7 @@ import { propertiesQueryFor } from "@/lib/property-queries";
 import { formatPrice, toPropertyView } from "@/lib/property-view";
 import type { Property } from "@/lib/rentivo-schemas";
 import { pageHead } from "@/lib/seo";
+import { amenityIconForLabel } from "@/lib/amenity-icons";
 
 type ResultsSearch = SearchValues;
 
@@ -246,14 +247,18 @@ function RoomResultCard({
           </button>
           {view.amenities.length > 0 && !expanded ? (
             <ul className="mt-4 flex flex-wrap gap-2">
-              {view.amenities.slice(0, 4).map((amenity) => (
-                <li
-                  key={amenity}
-                  className="rounded-md border border-border px-3 py-1 text-xs text-stone"
-                >
-                  {amenity}
-                </li>
-              ))}
+              {view.amenities.slice(0, 4).map((amenity) => {
+                const Icon = amenityIconForLabel(amenity);
+                return (
+                  <li
+                    key={amenity}
+                    className="flex items-center gap-2 rounded-md border border-border px-3 py-1 text-xs text-stone"
+                  >
+                    <Icon className="h-4 w-4 shrink-0" strokeWidth={1.5} aria-hidden />
+                    {amenity}
+                  </li>
+                );
+              })}
             </ul>
           ) : null}
         </div>
@@ -299,14 +304,18 @@ function RoomResultCard({
                 {common.results.amenitiesTitle}
               </h4>
               <ul className="mt-3 flex flex-wrap gap-2">
-                {view.amenities.map((amenity) => (
-                  <li
-                    key={amenity}
-                    className="rounded-md border border-border px-3 py-1 text-xs text-stone"
-                  >
-                    {amenity}
-                  </li>
-                ))}
+                {view.amenities.map((amenity) => {
+                  const Icon = amenityIconForLabel(amenity);
+                  return (
+                    <li
+                      key={amenity}
+                      className="flex items-center gap-2 rounded-md border border-border px-3 py-1 text-xs text-stone"
+                    >
+                      <Icon className="h-4 w-4 shrink-0" strokeWidth={1.5} aria-hidden />
+                      {amenity}
+                    </li>
+                  );
+                })}
               </ul>
             </>
           ) : null}
