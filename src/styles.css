@@ -325,15 +325,19 @@
 
 /* Desktop-only slow photo zoom inside rounded overflow-hidden frames. */
 @utility photo-zoom {
-  transition: transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
+  transform: scale(1) translateZ(0);
+  transform-origin: center center;
+  backface-visibility: hidden;
+  will-change: transform;
+  transition: transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
 
-  @media (hover: hover) {
-    .group:hover &,
-    &:hover {
-      transform: scale(1.05);
+  @media (hover: hover) and (pointer: fine) {
+    .group:hover & {
+      transform: scale(1.03) translateZ(0);
     }
   }
 }
+
 
 @utility arrow-nudge {
   transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1);
