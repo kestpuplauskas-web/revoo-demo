@@ -39,11 +39,15 @@ export function AvailabilityCalendar({
   range,
   onRangeChange,
   className,
+  compact = false,
+  action,
 }: {
   occupied: OccupiedRange[];
   range: DateRange | undefined;
   onRangeChange: (range: DateRange | undefined) => void;
   className?: string;
+  compact?: boolean;
+  action?: React.ReactNode;
 }) {
   const today = useMemo(startOfToday, []);
   const locale = useLocale();
