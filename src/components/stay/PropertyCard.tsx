@@ -3,6 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { useBooking } from "@/components/site/booking-context";
 import { LocaleLink } from "@/components/site/LocaleLink";
 import { Reveal } from "@/components/site/Reveal";
+import { PropertyGallery } from "@/components/stay/PropertyGallery";
 import { useContent } from "@/content";
 import { formatPrice, type PropertyView } from "@/lib/property-view";
 import { usePropertySlug } from "@/lib/property-slug";
@@ -39,17 +40,7 @@ export function PropertyCard({
         className="group block h-full rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sage focus-visible:ring-offset-2"
       >
       <article className="flex h-full flex-col overflow-hidden rounded-md bg-warm-white shadow-soft transition-shadow duration-500 hover:shadow-lift">
-        <div className="aspect-[4/3] overflow-hidden bg-linen">
-          {property.image ? (
-            <img
-              src={property.image}
-              alt={property.imageAlt}
-              loading="lazy"
-              decoding="async"
-              className="photo-zoom h-full w-full object-cover"
-            />
-          ) : null}
-        </div>
+        <PropertyGallery images={property.images} alt={property.imageAlt} eager={index === 0} />
 
         <div className="flex flex-1 flex-col p-7">
           <p className="label-caps text-stone">
