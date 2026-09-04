@@ -855,7 +855,8 @@
     "nav": {
       "api": "API prieiga",
       "integrations": "Integracijos",
-      "users": "Vartotojai"
+      "users": "Vartotojai",
+      "system": "Sistema"
     },
     "saveFailed": "Nepavyko išsaugoti nustatymų.",
     "saved": "Nustatymai išsaugoti.",
@@ -1174,12 +1175,38 @@
       "roleHousekeeper": "Kambarių tvarkytoja",
       "roleUser": "Vartotojas",
       "saveName": "Išsaugoti",
-      "sending": "Siunčiama…"
+      "sending": "Siunčiama…",
+      "roleDeveloper": "Programuotojas",
+      "developerOnlyHint": "Kviesti ir šalinti vartotojus gali tik programuotojas."
     },
     "validation": {
       "email": "Neteisingas el. pašto formatas",
       "hexColor": "Naudokite HEX formatą, pvz. #0F172A",
       "timeFormat": "Formatas turi būti HH:MM"
+    },
+    "system": {
+      "saveTitle": "Išsaugoti kaip numatytąją būseną",
+      "saveDesc": "Padaroma visų sistemos duomenų (nustatymų, objektų, šablonų, vertimų, rezervacijų, išlaidų) momentinė kopija. Į ją vėliau galėsite grįžti.",
+      "nameLabel": "Kopijos pavadinimas",
+      "namePlaceholder": "pvz. Demo versija 2026-09",
+      "saving": "Saugoma…",
+      "saveButton": "Išsaugoti dabartinę būseną",
+      "saved": "Numatytoji būsena išsaugota.",
+      "failed": "Nepavyko atlikti veiksmo.",
+      "restoreTitle": "Back to default",
+      "restoreDesc": "Visi sistemos duomenys grąžinami į paskutinę išsaugotą numatytąją būseną. Vėliau sukurti ar pakeisti įrašai bus prarasti. Vartotojų paskyros ir įkelti failai neliečiami.",
+      "backToDefault": "Back to default — atstatyti sistemą",
+      "restoring": "Atstatoma…",
+      "restored": "Sistema atstatyta į numatytąją būseną.",
+      "confirmTitle": "Atstatyti sistemą?",
+      "confirmDesc": "Visi duomenys bus pakeisti kopija iš {{date}}. Veiksmo atšaukti negalima.",
+      "confirmButton": "Taip, atstatyti",
+      "noSnapshot": "Išsaugotų kopijų dar nėra. Pirmiausia išsaugokite dabartinę būseną.",
+      "historyTitle": "Išsaugotos kopijos",
+      "unnamed": "Be pavadinimo",
+      "current": "Numatytoji",
+      "restoreThis": "Atstatyti šią",
+      "counts": "Objektų: {{properties}} · Rezervacijų: {{bookings}} · Šablonų: {{templates}} · Vertimų: {{translations}}"
     }
   },
   "staff": {

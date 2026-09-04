@@ -332,19 +332,35 @@ export const deleteProperty = createServerFn({ method: "POST" })
 export const getMyRole = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
-    const { supabase, userId } = context;
-    const [{ data: isAdmin, error: adminError }, { data: isHousekeeper, error: staffError }] =
-      await Promise.all([
-        supabase.rpc("has_role", { _user_id: userId, _role: "admin" }),
-        supabase.rpc("has_role", { _user_id: userId, _role: "housekeeper" }),
-      ]);
+    const { supabase, userId, claims } = context;
+    const [
+      { data: isAdmin, error: adminError },
+      { data: isHousekeeper, error: staffError },
+      { data: isDeveloper, error: devError },
+    ] = await Promise.all([
+      supabase.rpc("has_role", { _user_id: userId, _role: "admin" }),
+      supabase.rpc("has_role", { _user_id: userId, _role: "housekeeper" }),
+      supabase.rpc("has_role", { _user_id: userId, _role: "developer" }),
+    ]);
     if (adminError) throw new Error(adminError.message);
     if (staffError) throw new Error(staffError.message);
+    if (devError) throw new Error(devError.message);
 
-    const roles: Array<"admin" | "housekeeper"> = [];
+    const roles: Array<"admin" | "housekeeper" | "developer"> = [];
+    if (isDeveloper) roles.push("developer");
     if (isAdmin) roles.push("admin");
     if (isHousekeeper) roles.push("housekeeper");
-    return { userId, isAdmin: Boolean(isAdmin), roles };
+    const email =
+      typeof (claims as { email?: unknown } | null)?.email === "string"
+        ? ((claims as { email: string }).email)
+        : "";
+    return {
+      userId,
+      email,
+      isAdmin: Boolean(isAdmin),
+      isDeveloper: Boolean(isDeveloper),
+      roles,
+    };
   });
 
 // Self-serve admin bootstrap was removed: it allowed any registered user to

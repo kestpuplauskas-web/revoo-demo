@@ -23,6 +23,7 @@ import {
 import { ApiAccessSection } from "@/components/admin/settings/ApiAccessSection";
 import { EmailTestSection } from "@/components/admin/settings/EmailTestSection";
 import { UsersSection } from "@/components/admin/settings/UsersSection";
+import { SystemSection } from "@/components/admin/settings/SystemSection";
 import { PLATFORM_NAME } from "@/lib/brand";
 import { useBrandedTitle } from "@/hooks/useBrandedTitle";
 
@@ -45,7 +46,7 @@ export const Route = createFileRoute("/_authenticated/admin/settings")({
   }),
 });
 
-type NavId = SettingsSectionId | "integrations" | "api" | "users";
+type NavId = SettingsSectionId | "integrations" | "api" | "users" | "system";
 
 function PropertySettingsPage() {
   const { t } = useTranslation();
@@ -60,6 +61,7 @@ function PropertySettingsPage() {
 
   const { data: role } = useQuery({ queryKey: ["my-role"], queryFn: () => fetchRole() });
   const canEdit = Boolean(role?.isAdmin);
+  const isDeveloper = Boolean(role?.isDeveloper);
 
   const { data: properties } = useQuery({
     queryKey: ["admin-properties-settings"],
@@ -170,6 +172,7 @@ function PropertySettingsPage() {
     { id: "integrations", icon: "🔌", title: t("settings.nav.integrations") },
     { id: "api", icon: "🔑", title: t("settings.nav.api") },
     { id: "users", icon: "👥", title: t("settings.nav.users") },
+    ...(isDeveloper ? [{ id: "system" as NavId, icon: "🛠️", title: t("settings.nav.system") }] : []),
   ];
 
   const section = SETTINGS_SECTIONS.find((s) => s.id === active);
@@ -220,7 +223,9 @@ function PropertySettingsPage() {
                 {t("common.loading")}
               </div>
             ) : active === "users" ? (
-              <UsersSection canEdit={canEdit} />
+              <UsersSection canEdit={canEdit} canManage={isDeveloper} />
+            ) : active === "system" && isDeveloper ? (
+              <SystemSection />
             ) : active === "api" ? (
               <ApiAccessSection canEdit={canEdit} />
             ) : active === "integrations" ? (

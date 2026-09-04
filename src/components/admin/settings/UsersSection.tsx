@@ -34,6 +34,7 @@ import {
 } from "@/lib/users.functions";
 
 const ROLE_LABEL_KEYS: Record<string, string> = {
+  developer: "settings.users.roleDeveloper",
   admin: "settings.users.roleAdmin",
   housekeeper: "settings.users.roleHousekeeper",
   user: "settings.users.roleUser",
@@ -47,7 +48,7 @@ function fmt(value: string | null | undefined, withTime = false) {
     : d.toLocaleDateString("lt-LT");
 }
 
-export function UsersSection({ canEdit }: { canEdit: boolean }) {
+export function UsersSection({ canEdit, canManage }: { canEdit: boolean; canManage: boolean }) {
   const { t } = useTranslation();
   const invite = useServerFn(inviteUser);
   const fetchUsers = useServerFn(listUsersWithRoles);
@@ -57,7 +58,7 @@ export function UsersSection({ canEdit }: { canEdit: boolean }) {
 
   const [email, setEmail] = useState("");
   const [fullName, setFullName] = useState("");
-  const [role, setRole] = useState<"admin" | "housekeeper">("housekeeper");
+  const [role, setRole] = useState<"admin" | "housekeeper" | "developer">("housekeeper");
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editingName, setEditingName] = useState("");
 
@@ -129,7 +130,7 @@ export function UsersSection({ canEdit }: { canEdit: boolean }) {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                disabled={!canEdit}
+                disabled={!canManage}
               />
             </div>
             <div className="flex-1 space-y-1.5">
@@ -139,15 +140,15 @@ export function UsersSection({ canEdit }: { canEdit: boolean }) {
                 value={fullName}
                 placeholder={t("settings.users.namePlaceholder")}
                 onChange={(e) => setFullName(e.target.value)}
-                disabled={!canEdit}
+                disabled={!canManage}
               />
             </div>
             <div className="space-y-1.5 sm:w-56">
               <Label>{t("settings.users.role")}</Label>
               <Select
                 value={role}
-                onValueChange={(v) => setRole(v as "admin" | "housekeeper")}
-                disabled={!canEdit}
+                onValueChange={(v) => setRole(v as "admin" | "housekeeper" | "developer")}
+                disabled={!canManage}
               >
                 <SelectTrigger>
                   <SelectValue />
@@ -155,15 +156,16 @@ export function UsersSection({ canEdit }: { canEdit: boolean }) {
                 <SelectContent>
                   <SelectItem value="admin">{t("settings.users.roleAdmin")}</SelectItem>
                   <SelectItem value="housekeeper">{t("settings.users.roleHousekeeper")}</SelectItem>
+                  <SelectItem value="developer">{t("settings.users.roleDeveloper")}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
-            <Button type="submit" disabled={!canEdit || m.isPending}>
+            <Button type="submit" disabled={!canManage || m.isPending}>
               {m.isPending ? t("settings.users.sending") : t("settings.users.invite")}
             </Button>
           </form>
           <p className="mt-3 text-xs text-muted-foreground">
-            {t("settings.users.inviteHint")}
+            {canManage ? t("settings.users.inviteHint") : t("settings.users.developerOnlyHint")}
           </p>
         </CardContent>
       </Card>
@@ -255,7 +257,7 @@ export function UsersSection({ canEdit }: { canEdit: boolean }) {
                             <Button
                               variant="ghost"
                               size="icon"
-                              disabled={!canEdit || del.isPending}
+                              disabled={!canManage || del.isPending}
                               aria-label={t("settings.users.deleteAria")}
                             >
                               <Trash2 className="h-4 w-4 text-destructive" />

@@ -1,7 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
-import { assertAdmin } from "./users.server";
+import { assertAdmin, assertDeveloper } from "./users.server";
 
 export const inviteUser = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
@@ -9,14 +9,14 @@ export const inviteUser = createServerFn({ method: "POST" })
     z
       .object({
         email: z.string().trim().email(),
-        role: z.enum(["admin", "housekeeper"]),
+        role: z.enum(["admin", "housekeeper", "developer"]),
         fullName: z.string().trim().max(120).optional(),
         redirectTo: z.string().url().optional(),
       })
       .parse(d),
   )
   .handler(async ({ data, context }) => {
-    await assertAdmin(context);
+    await assertDeveloper(context);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
     const { appLink } = await import("@/lib/app-url.server");
@@ -59,7 +59,11 @@ export const inviteUser = createServerFn({ method: "POST" })
     if (actionLink) {
       const { sendEmail } = await import("@/lib/notifications.server");
       const roleLabel =
-        data.role === "admin" ? "administratoriaus" : "kambarių tvarkytojos";
+        data.role === "admin"
+        ? "administratoriaus"
+        : data.role === "developer"
+          ? "programuotojo"
+          : "kambarių tvarkytojos";
       await sendEmail({
         to: data.email,
         subject: "Kvietimas prisijungti prie Dharma Stay sistemos",
@@ -131,7 +135,7 @@ export const deleteUser = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((d) => z.object({ userId: z.string().uuid() }).parse(d))
   .handler(async ({ data, context }) => {
-    await assertAdmin(context);
+    await assertDeveloper(context);
     if (data.userId === context.userId) throw new Error("Negalite ištrinti savo paskyros.");
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
